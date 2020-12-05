@@ -1,0 +1,3 @@
+include ':drone'
+include ':app'
+rootProject.name = "Drone"
