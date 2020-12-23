@@ -74,9 +74,21 @@ class ResponseDataSource<T> : DataSource<T> {
         this.callback = callBack
     }
 
-    /* @JvmSynthetic
-     inline fun combine(call: Call<T>, crossinline onResult: (response: ApiResponse<T>) -> Unit) =
-         combine(call, getCallbackFromOnResult(onResult))*/
+    @JvmSynthetic
+    inline fun combine(call: Call<T>, crossinline onResult: (response: ApiResponse<T>) -> Unit) =
+        combine(call, getCallbackFromOnResult(onResult))
+
+    /**
+     * extension method for requesting and observing response at once
+     */
+    @JvmSynthetic
+    inline fun request(crossinline action: (ApiResponse<T>).() -> Unit) = apply {
+        if (call != null && callback == null) {
+            combine(requireNotNull(call), action)
+        }
+        request()
+    }
+
 
 
     /**
@@ -95,6 +107,10 @@ class ResponseDataSource<T> : DataSource<T> {
                 else -> enqueue()
             }
         }
+    }
+
+    fun dataRetainPolicy(dataRetainPolicy: DataRetainPolicy) = apply {
+        this.dataRetainPolicy = dataRetainPolicy
     }
 
     /**
@@ -158,24 +174,26 @@ class ResponseDataSource<T> : DataSource<T> {
     /**
      *  以LiveData输出
      */
-    fun asLiveData():LiveData<T>{
-       return MutableLiveData<T>().apply {
-           liveData = this
-           if (data!=empty){
-               val data = data as ApiResponse<T>
-               if (data is ApiResponse.Success<T>){
-                   postValue(data.response.body())
-               }
-           }
-       }
-   }
-    override fun retry(retryCount: Int, interval: Long): DataSource<T> = apply {
+    @Suppress("UNCHECKED_CAST")
+    fun asLiveData(): LiveData<T> {
+        return MutableLiveData<T>().apply {
+            liveData = this
+            if (data != empty) {
+                val data = data as ApiResponse<T>
+                if (data is ApiResponse.Success<T>) {
+                    postValue(data.response.body())
+                }
+            }
+        }
+    }
+
+    override fun retry(retryCount: Int, interval: Long) = apply {
         this.retryCount = retryCount
         this.retryTimeInterval = interval
     }
 
-    override fun joinDisposable(disposable: CompositeDisposable): DataSource<T> = apply{
-      this.compositeDisposable = disposable
+    override fun joinDisposable(disposable: CompositeDisposable) = apply {
+        this.compositeDisposable = disposable
     }
 
     override fun invalidate() {
@@ -185,12 +203,12 @@ class ResponseDataSource<T> : DataSource<T> {
     }
 
     override fun observeResponse(observer: ResponseObserver<T>): DataSource<T> = apply {
-       this.responseObserver = observer
+        this.responseObserver = observer
     }
 
     @JvmSynthetic
-    inline fun observerResponse(crossinline action :(ApiResponse<T>) -> Unit) =
-        observeResponse( object : ResponseObserver<T>{
+    inline fun observerResponse(crossinline action: (ApiResponse<T>) -> Unit) =
+        observeResponse(object : ResponseObserver<T> {
             override fun observe(response: ApiResponse<T>) {
                 action(response)
             }
@@ -198,7 +216,7 @@ class ResponseDataSource<T> : DataSource<T> {
         })
 
     override fun <R> concat(dataSource: DataSource<R>): DataSource<R> {
-        this.concat = {dataSource.request()}
+        this.concat = { dataSource.request() }
         return dataSource
     }
 

@@ -6,7 +6,10 @@
     <data>
         <variable
             name="viewModel"
-            type="com.dourl.drone.coroutines.MainCoroutinesViewModel" />
+            type="com.dourl.drone.MainViewModel" />
+        <variable
+            name="adapter"
+            type="com.dourl.drone.adapter.PosterAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

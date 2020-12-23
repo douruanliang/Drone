@@ -3,25 +3,18 @@ plugins {
     id 'kotlin-android'
 }
 apply from: '../dependencies.gradle'
+//apply from: '../publish.gradle'
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion "30.0.2"
-
     defaultConfig {
         minSdkVersion versions.minSdk
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+    buildFeatures {
+        buildConfig false
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,7 +27,6 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.core:core-ktx:$versions.androidxCorektx"
     implementation "androidx.appcompat:appcompat:$versions.androidxAppcompat"
     implementation 'com.google.android.material:material:1.2.1'
