@@ -3,7 +3,7 @@ apply plugin: 'com.novoda.bintray-release'
 def siteUrl = 'https://github.com/douruanliang/Drone'
 publish {
     repoName = "maven"
-    userOrg = 'douruanliang2'
+    userOrg = 'douruanliang'
     groupId = 'com.dourl.base'
     artifactId = 'DroneNet'   // 项目名称要和 bintray 上的 package 名称一致
     publishVersion = '0.0.1'                 // 版本号也要要和 bintray一致
