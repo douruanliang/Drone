@@ -6,7 +6,7 @@ plugins {
 apply from: '../dependencies.gradle'
 android {
     compileSdkVersion versions.compileSdk
-    buildToolsVersion "30.0.2"
+    buildToolsVersion versions.buildToolsVersion
     defaultConfig {
         applicationId "com.dourl.drone"
         minSdkVersion versions.minSdk
