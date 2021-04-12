@@ -13,13 +13,18 @@ android {
         targetSdkVersion versions.compileSdk
         versionCode versions.versionCode
         versionName versions.versionName
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
-    buildFeatures {
-        dataBinding true
+    dataBinding {
+        enabled = true
     }
+
+    viewBinding {
+        enabled = true
+    }
+
 
     buildTypes {
         release {
