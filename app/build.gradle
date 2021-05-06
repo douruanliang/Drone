@@ -66,6 +66,7 @@ dependencies {
 
     implementation 'com.dourl.base:baseRecyclerViewAdapter:1.0.1'
     implementation 'com.dourl.base:elasticviews:0.0.1'
+    implementation project(path: ':compose')
 
 
 }
