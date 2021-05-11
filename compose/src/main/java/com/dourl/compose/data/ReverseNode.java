@@ -37,7 +37,7 @@ public class ReverseNode {
 
   }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         LNode head = new LNode();
         head.next = null;
 
