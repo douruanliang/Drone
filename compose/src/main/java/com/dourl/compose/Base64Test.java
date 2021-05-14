@@ -17,5 +17,7 @@ public class Base64Test {
         System.out.println("encodeName{}" + encodeName);
         String decodeName = new String(Base64.getDecoder().decode(encodeName));
         System.out.println("decodeName{}" + decodeName);
+
+        Thread.currentThread();
     }
 }
