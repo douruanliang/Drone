@@ -10,5 +10,8 @@ public class Test {
         WhetherDisplay2 whetherDisplay2 = new WhetherDisplay2(whetherSubject);
 
         whetherSubject.setTemperature(10f);
+
+        System.out.println("-----------------------");
+
     }
 }
